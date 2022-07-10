@@ -16,8 +16,10 @@ function App() {
   const [oCells, setOCells] = useState([]);
 
   useEffect(() => {
-    
-  });
+    analyzeForAWin(xCells);
+    analyzeForAWin(oCells);
+    return () => {}
+  }, [xCells, oCells, activePlayer]);
 
   function analyzeForAWin(playerArray) {
     const rows = [[1,2,3], [4,5,6], [7,8,9]];
@@ -28,7 +30,6 @@ function App() {
       columns.some(column => column.every(x => playerArray.includes(x))) ||
       diagonals.some(diag => diag.every(x => playerArray.includes(x)))
     ) {
-      debugger
       setWinner(activePlayer)
     } else {
       console.log(playerArray)
@@ -48,11 +49,9 @@ function App() {
       setTakenCells(prevCell => [...prevCell, cell]);
       if (activePlayer === 'x') {
         setXCells(prevCell => [...prevCell, cell]);
-        analyzeForAWin(xCells);
         setActivePlayer('o');
       } else if (activePlayer === 'o') {
         setOCells(prevCell => [...prevCell, cell]);
-        analyzeForAWin(oCells);
         setActivePlayer('x');
       }
     }
